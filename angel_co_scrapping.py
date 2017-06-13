@@ -45,11 +45,19 @@ tagline = driver.find_elements_by_css_selector("div.tagline")
 for i in tagline:
     try:
         print(i.text)
-    raise:
+    except:
         print("saute")
 jobs = driver.find_elements_by_css_selector("div.startup-info-table")
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 #scroll down the page
+jobs_title = driver.find_elements_by_css_selector("div.collapsed-listing-row")
+
+for i in jobs_title:
+    try:
+        print(i.text)
+    except:
+        print("saute")
+
 
 
 

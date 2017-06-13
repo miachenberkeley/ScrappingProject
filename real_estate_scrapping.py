@@ -4,6 +4,9 @@ import time
 import csv
 from selenium.common.exceptions import NoSuchElementException
 
+PATH = '/usr/local/bin/chromedriver'
+#PATH = 'C:\Users\vtec-mchen\PycharmProjects\chromedriver.exe'
+
 
 def Get_to_list(driver, url):
     driver.get(url)
@@ -144,7 +147,7 @@ def Scrape_Website(driver, url):
 
         nb_pages_done += 1
 
-        print('Page', str(nb_pages_done), 'scrappée')
+        print('Page', str(nb_pages_done), 'scrappee')
 
     Convert_to_csv(List_of_docs)
 
@@ -157,7 +160,7 @@ if __name__ == '__main__':
     nb_pages_done = 0
     url = 'http://acrparis.sbcounty.gov'
     #driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
-    driver = webdriver.Chrome('C:\Users\vtec-mchen\PycharmProjects\chromedriver.exe')
+    driver = webdriver.Chrome(executable_path=PATH)
     Scrape_Website(driver, url)
 
     print('Et voici la magnifique liste: ')

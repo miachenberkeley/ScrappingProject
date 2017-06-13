@@ -9,18 +9,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 import csv
 import time
 
-def Get_to_list(driver, url):
-    driver.get(url)
-    url2 = 'https://angel.co/paris/jobs'
+def scrape_website(driver, url):
+    pass
 
-    print('got to list')
-
-def Convert_to_csv(List_of_docs):
-
-    keys = ['Startup_name', 'Jobs',
-            'Duration']
-    with open('angel_co.csv', 'w') as output_file:
-        dict_writer = csv.DictWriter(output_file, keys)
-        dict_writer.writeheader()
-        dict_writer.writerows(List_of_docs)
+def requirement():
+    pass
 

@@ -4,8 +4,8 @@ import time
 import csv
 from selenium.common.exceptions import NoSuchElementException
 
-PATH = '/usr/local/bin/chromedriver'
-#PATH = 'C:\Users\vtec-mchen\PycharmProjects\chromedriver.exe'
+#PATH = '/usr/local/bin/chromedriver'
+PATH = 'C:/Users/vtec-mchen/PycharmProjects/chromedriver.exe'
 
 
 def Get_to_list(driver, url):
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     nb_pages_done = 0
     url = 'http://acrparis.sbcounty.gov'
     #driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver')
-    driver = webdriver.Chrome(executable_path=PATH)
+    driver = webdriver.Chrome(PATH)
     Scrape_Website(driver, url)
 
     print('Et voici la magnifique liste: ')

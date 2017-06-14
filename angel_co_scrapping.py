@@ -26,7 +26,7 @@ List_of_docs = []
 ##################Fonction###########################
 def Convert_to_csv(List_of_docs):
 
-    keys = ['startup-names', 'tagline','jobs']
+    keys = ['id', 'name', 'tagline','jobs']
     with open('angel_co_jobs.csv', 'w') as output_file:
         dict_writer = csv.DictWriter(output_file, keys)
         dict_writer.writeheader()
@@ -56,7 +56,11 @@ login = driver.find_element_by_name("commit")
 login.click()
 input = driver.find_element_by_css_selector("div.search-box")
 input.click()
+driver.implicitly_wait(14000)
 keyword= driver.find_element_by_xpath("//input[@class='input keyword-input']")
+
+
+
 
 for i in research:
     keyword.send_keys(i)
@@ -67,10 +71,13 @@ button_save.click()
 
 nb_startups = driver.find_elements_by_css_selector("span.label")[-1].text
 
+
 tagline = driver.find_elements_by_css_selector("div.tagline")
 jobs_title = driver.find_elements_by_css_selector("div.collapsed-listing-row")
 startup_names = driver.find_elements_by_css_selector("a.startup-link")
 #info_table = driver.find_elements_by_css_selector("div.startup-info-table")
+
+print(len(tagline), len(jobs_title), len(startup_names))
 
 for index, name in enumerate(startup_names):
     dictionnaire = {}
@@ -88,12 +95,13 @@ for index, name in enumerate(tagline):
         List_of_docs[index]['tagline'] = name.text.encode("utf-8")
 
 for index, name in enumerate(jobs_title):
-        List_of_docs[index]['jobs'] = name.text.encode("utf-8")
-
+        #List_of_docs[index]['jobs'] = name.text.encode("utf-8")
+        print(index, name.text.encode("utf-8"))
 
 
 
 print(List_of_docs)
+#Convert_to_csv(List_of_docs)
 
 #scroll down the page
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")

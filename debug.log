@@ -2,3 +2,6 @@
 [0613/123309.066:ERROR:exception_snapshot_win.cc(87)] thread ID 9304 not found in process
 [0613/123309.066:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::Initialize failed
 [0613/123309.066:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess: Tentative d’accès à un processus en cours d’arrêt.  (0xc000010a)
+[0614/180822.800:ERROR:process_reader_win.cc(114)] NtOpenThread: {Accès refusé} Un processus a demandé l’accès a un objet, mais il ne bénéficie pas des autorisations nécessaires.  (0xc0000022)
+[0614/180822.802:ERROR:exception_snapshot_win.cc(87)] thread ID 21648 not found in process
+[0614/180822.802:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::Initialize failed

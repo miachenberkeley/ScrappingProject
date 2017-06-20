@@ -16,7 +16,7 @@ import sys
 #PATH = '/usr/local/bin/chromedriver'
 PATH = 'C:/Users/vtec-mchen/PycharmProjects/chromedriver.exe'
 Login = ["myouhu@yahoo.fr", "bismilah"]
-research = ["Paris", ""]
+research = ["Paris"]
 
 ######################################################
 
@@ -34,8 +34,9 @@ def Convert_to_csv(List_of_docs):
         dict_writer.writeheader()
         dict_writer.writerows(List_of_docs)
 
-def scrap_website(List_of_docs,number_startups):
-
+''' Method 1 
+ def scrap_website(List_of_docs,number_startups):
+    
     tagline = driver.find_elements_by_css_selector("div.tagline")  # find tagline
     jobs_title = driver.find_elements_by_css_selector("div.collapsed-listing-row")  # find number of jobs
     startup_names = driver.find_elements_by_css_selector("a.startup-link")  # find startup's name
@@ -50,21 +51,58 @@ def scrap_website(List_of_docs,number_startups):
             # print(name.text)
             dictionnaire["id"] = index
             dictionnaire["name"] = name.text
+            print()
 
         except:
             print("saute")
         List_of_docs.append(dictionnaire)
 
+
+    for i in list_of_docs:
+        site_web = driver.find_elements_by_partial_link_text(i["name"])
+        for j in site_web:
+            adresse = j.get_attribute("href")
+            i["adresse_web"] = adresse
+
+
+
     for index, name in enumerate(tagline):
-        List_of_docs[index]['tagline'] = name.text.encode("utf-8")
+        print(index, name.text.encode("utf-8"))
+        #List_of_docs[index]['tagline'] = name.text.encode("utf-8")
 
     for index, name in enumerate(jobs_title):
         # List_of_docs[index]['jobs'] = name.text.encode("utf-8")
         print(index, name.text.encode("utf-8"))
 
-    return List_of_docs,number_startups
+    return List_of_docs,number_startups '''
 
 
+def scrap_website(List_of_docs, number_startups):
+
+    startups = driver.find_elements_by_css_selector("div.djl87.job_listings.fbw9.browse_startups_table_row._a._jm")
+    for company in startups:
+        scrap_bloc = {}
+        l = len(company)
+        print(l)
+        scrap_bloc ["name"] = company[0].text.encode("utf-8")
+        scrap_bloc["tagline"] = company[1].text.encode("utf-8")
+
+        for j in range(2,l):
+            list = []
+            nb_jobs = 0
+            if "Active" in company[j].text.encode("utf-8") :
+                break
+            elif "more" in company[j].text.encode("utf-8") :
+                str = company[j].text.encode("utf-8")
+                more_jobs = re.findall(r'\d+',str)
+
+                nb_jobs = nb_jobs + int(more_jobs[0])
+            else:
+                list.append(company[j].text.encode("utf-8"))
+                nb_jobs +=1
+        scrap_bloc["nombre de jobs"] = nb_jobs
+        scrap_bloc["intitule des jobs"] = list
+        List_of_docs.append(scrap_bloc)
 
 
 
@@ -94,7 +132,7 @@ login.click()
 
 input = driver.find_element_by_css_selector("div.search-box")
 input.click()
-driver.implicitly_wait(14000)
+driver.implicitly_wait(1400)
 keyword= driver.find_element_by_xpath("//input[@class='input keyword-input']")
 
 for i in research:
@@ -104,11 +142,19 @@ for i in research:
 button_save = driver.find_elements_by_css_selector("a.save-current-filters.c-button.c-button--gray.c-button--sm")[0]
 button_save.click() #wrong button
 
+
 ################### Scrap pages #########################
 
-nb_startups = driver.find_elements_by_css_selector("span.label")[-1].text #find total number of startups
+nb_startups = driver.find_elements_by_css_selector("div.label-container.u-floatLeft")[-1].text #find total number of startups
+print(nb_startups, number_startups)
+List_of_docs,number_startups = scrap_website(List_of_docs,number_startups)
+
+print(List_of_docs,number_startups)
+
+'''
 
 while number_startups != nb_startups:
+    print("enter in the loop")
     print("before %s " %(number_startups))
     List_of_docs,number_startups = scrap_website(List_of_docs,number_startups)
     print("after %s" %number_startups)
@@ -118,7 +164,7 @@ while number_startups != nb_startups:
     nb_page_scrapped +=1
 
 print(number_startups, nb_page_scrapped)
-Convert_to_csv(List_of_docs)
+Convert_to_csv(List_of_docs) '''
 
 
 

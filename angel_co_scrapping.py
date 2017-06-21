@@ -21,7 +21,8 @@ research = ["Paris"]
 ######################################################
 
 ##################Variable############################
-List_of_docs = []
+global List_of_docs
+List_of_docs = {}
 number_startups = 0
 nb_page_scrapped = 0
 
@@ -82,27 +83,8 @@ def scrap_website(List_of_docs, number_startups):
     startups = driver.find_elements_by_css_selector("div.djl87.job_listings.fbw9.browse_startups_table_row._a._jm")
     for company in startups:
         scrap_bloc = {}
-        l = len(company)
-        print(l)
-        scrap_bloc ["name"] = company[0].text.encode("utf-8")
-        scrap_bloc["tagline"] = company[1].text.encode("utf-8")
-
-        for j in range(2,l):
-            list = []
-            nb_jobs = 0
-            if "Active" in company[j].text.encode("utf-8") :
-                break
-            elif "more" in company[j].text.encode("utf-8") :
-                str = company[j].text.encode("utf-8")
-                more_jobs = re.findall(r'\d+',str)
-
-                nb_jobs = nb_jobs + int(more_jobs[0])
-            else:
-                list.append(company[j].text.encode("utf-8"))
-                nb_jobs +=1
-        scrap_bloc["nombre de jobs"] = nb_jobs
-        scrap_bloc["intitule des jobs"] = list
-        List_of_docs.append(scrap_bloc)
+        print(company)
+        List_of_docs["company"] = company.text
 
 
 
@@ -150,6 +132,7 @@ print(nb_startups, number_startups)
 List_of_docs,number_startups = scrap_website(List_of_docs,number_startups)
 
 print(List_of_docs,number_startups)
+Convert_to_csv(List_of_docs)
 
 '''
 

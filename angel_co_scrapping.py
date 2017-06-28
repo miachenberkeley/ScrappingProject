@@ -25,13 +25,15 @@ def Convert_to_csv(List_of_docs):
 #################Scrap websites#####################
 
 def scrap_website(driver,List_of_docs, number_startups = 0):
-    driver.implicitly_wait(100)
+
     tagline = driver.find_elements_by_css_selector("div.tagline")  # find tagline
-    driver.implicitly_wait(500)
+
     jobs_title = driver.find_elements_by_css_selector("div.collapsed-listing-row")  # find number of jobs
-    driver.implicitly_wait(500)
+
     startup_names = driver.find_elements_by_css_selector("a.startup-link")  # find startup's name
-    driver.implicitly_wait(500)
+
+    product_description = driver.find_elements_by_css_selector("details-row product")  # find startup's description
+
     dict_job_titles = []
     print("display nb of startups scrapped")
     print(len(tagline), len(jobs_title), len(startup_names))
@@ -65,6 +67,7 @@ def scrap_website(driver,List_of_docs, number_startups = 0):
         except:
             print(name)
 
+'''
     for index, name in enumerate(jobs_title):
         # List_of_docs[index]['jobs'] = name.text.encode("utf-8")
         try:
@@ -72,7 +75,8 @@ def scrap_website(driver,List_of_docs, number_startups = 0):
         except:
             dict_job_titles.append("job")
 
-    return List_of_docs,number_startups
+    return List_of_docs,number_startups '''
+
 
 
 def scrap_website2(driver,List_of_docs, number_startups):
@@ -128,6 +132,20 @@ def search_bar(driver,research):
 
 ################### Scrap pages #########################
 
+def scrap_pages(number_startups,nb_startups):
+
+    while number_startups != nb_startups:
+        print("enter in the loop")
+        print("before %s " %(number_startups))
+        List_of_docs,number_startups = scrap_website(List_of_docs,number_startups)
+        print("after %s" %number_startups)
+        # scroll down the page
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        print(List_of_docs)
+        nb_page_scrapped +=1
+
+    print(number_startups, nb_page_scrapped)
+    Convert_to_csv(List_of_docs)
 
 #########################Data Entry###################
 #PATH = '/usr/local/bin/chromedriver'
@@ -145,20 +163,7 @@ scrap_website(driver,List_of_docs,100)
 print(List_of_docs,number_startups)
 Convert_to_csv(List_of_docs)
 
-'''
 
-while number_startups != nb_startups:
-    print("enter in the loop")
-    print("before %s " %(number_startups))
-    List_of_docs,number_startups = scrap_website(List_of_docs,number_startups)
-    print("after %s" %number_startups)
-    # scroll down the page
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    print(List_of_docs)
-    nb_page_scrapped +=1
-
-print(number_startups, nb_page_scrapped)
-Convert_to_csv(List_of_docs) '''
 
 
 
